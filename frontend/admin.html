@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - QuizMaster</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+      .admin-section {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.admin-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: white;
+}
+
+.admin-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.admin-header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.admin-tabs {
+    display: flex;
+    background: white;
+    border-radius: 15px;
+    padding: 0.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    gap: 0.5rem;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 1.2rem 2rem;
+    border: none;
+    background: transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+.tab-btn:hover:not(.active) {
+    background: #f8f9fa;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-section {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.tab-section h3 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    border-bottom: 3px solid #f8f9fa;
+    padding-bottom: 0.5rem;
+}
+
+.tab-section h4 {
+    color: #34495e;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.options-section {
+    border: 2px solid #f8f9fa;
+    border-radius: 12px;
+    padding: 1.5rem;
+    background: #fafbfc;
+    margin: 1rem 0;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.option-group {
+    margin-bottom: 0;
+}
+
+.option-group input {
+    background: white;
+    border: 2px solid #e9ecef;
+}
+
+.option-group input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>🧠 QuizMaster Admin</h1>
+                </div>
+                <div class="user-info">
+                    <a href="home.html" class="btn btn-secondary">← Back to Home</a>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <div class="admin-section">
+                <div class="admin-header">
+                    <h2>Admin Dashboard</h2>
+                    <p>Manage questions and categories</p>
+                </div>
+
+                <div class="admin-tabs">
+                    <button class="tab-btn active" onclick="showTab('questions')">
+                        Manage Questions
+                    </button>
+                    <button class="tab-btn" onclick="showTab('categories')">
+                         Manage Categories
+                    </button>
+                </div>
+
+                <!-- Questions Tab -->
+                <div id="questionsTab" class="tab-content active">
+                    <div class="tab-section">
+                        <h3>➕ Add New Question</h3>
+                        <form id="questionForm" class="admin-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="questionCategory">Category *</label>
+                                    <select id="questionCategory" required>
+                                        <option value="">Select Category</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="questionPoints">Points *</label>
+                                    <input type="number" id="questionPoints" value="5" min="5" max="10" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="questionText">Question Text *</label>
+                                <textarea id="questionText" required placeholder="Enter your question here..." rows="3"></textarea>
+                            </div>
+
+                            <div class="options-section">
+                                <h4>Options *</h4>
+                                <div class="options-grid">
+                                    <div class="form-group option-group">
+                                        <label for="optionA">Option A *</label>
+                                        <input type="text" id="optionA" required placeholder="Enter option A">
+                                    </div>
+                                    <div class="form-group option-group">
+                                        <label for="optionB">Option B *</label>
+                                        <input type="text" id="optionB" required placeholder="Enter option B">
+                                    </div>
+                                    <div class="form-group option-group">
+                                        <label for="optionC">Option C *</label>
+                                        <input type="text" id="optionC" required placeholder="Enter option C">
+                                    </div>
+                                    <div class="form-group option-group">
+                                        <label for="optionD">Option D *</label>
+                                        <input type="text" id="optionD" required placeholder="Enter option D">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="correctAnswer">Correct Answer *</label>
+                                <select id="correctAnswer" required>
+                                    <option value="a">Option A</option>
+                                    <option value="b">Option B</option>
+                                    <option value="c">Option C</option>
+                                    <option value="d">Option D</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-full">
+                                ➕ Add Question
+                            </button>
+                        </form>
+                    </div>
+
+
+                </div>
+
+                <!-- Categories Tab -->
+                <div id="categoriesTab" class="tab-content">
+                    <div class="tab-section">
+                        <h3>Add New Category</h3>
+                        <form id="categoryForm" class="admin-form">
+                            <div class="form-group">
+                                <label for="categoryName">Category Name *</label>
+                                <input type="text" id="categoryName" required placeholder="Enter category name">
+                            </div>
+                            <div class="form-group">
+                                <label for="categoryDescription">Description</label>
+                                <textarea id="categoryDescription" placeholder="Enter category description..." rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full">
+                                Add Category
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="tab-section">
+                        <h3>Existing Categories</h3>
+                        <div id="categoriesList" class="categories-list">
+                            <div class="loading">Loading categories...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

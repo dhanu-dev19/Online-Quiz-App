@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - QuizMaster</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>🧠 QuizMaster</h1>
+                </div>
+                <div class="user-info">
+                    <span id="userWelcome">Welcome, User!</span>
+                    <button id="logoutBtn" class="btn btn-danger">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <div class="admin-panel hidden" id="adminPanel">
+                <h2>Admin Dashboard</h2>
+                <div class="admin-actions">
+                    <a href="admin.html" class="admin-card">
+                        <span class="admin-icon">➕</span>
+                        <h3>Manage Questions</h3>
+                        <p>Add and edit quiz questions</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="categories-section" id="userSection">
+                <h2>Choose Your Quiz Category 🎯</h2>
+                <div class="categories-grid" id="categoriesGrid">
+                    <!-- Categories will be loaded here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const user = getCurrentUser();
+        if (!user) {
+            window.location.href = 'login.html';
+            return;
+        }
+
+        // Update UI with user info
+        document.getElementById('userWelcome').textContent = `Welcome, ${user.username}! (${user.role})`;
+
+        // Show/hide admin panel
+        if (user.role === 'admin') {
+            document.getElementById('adminPanel').classList.remove('hidden');
+            document.getElementById('userSection').classList.add('hidden');
+        }
+
+        // Load categories
+        loadCategories();
+
+        // Logout handler
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            logout();
+            window.location.href = 'index.html';
+        });
+    });
+
+    async function loadCategories() {
+        try {
+            const categories = await fetchCategories();
+            const grid = document.getElementById('categoriesGrid');
+
+            grid.innerHTML = categories.map(category => `
+                <div class="category-card">
+                    <div class="category-icon">📚</div>
+                    <h3>${category.name}</h3>
+                    <p>${category.description || 'Test your knowledge'}</p>
+                    <div class="category-actions">
+                        <a href="quiz.html?category=${category.id}" class="btn btn-primary">Start Quiz</a>
+                        <a href="leaderboard.html?category=${category.id}" class="btn btn-secondary">Leaderboard</a>
+                    </div>
+                </div>
+            `).join('');
+        } catch (error) {
+            console.error('Error loading categories:', error);
+            document.getElementById('categoriesGrid').innerHTML = `
+                <div class="error-message">
+                    <p>Error loading categories. Please try again later.</p>
+                </div>
+            `;
+        }
+    }
+</script>
+</body>
+</html>
