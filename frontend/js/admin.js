@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 async function initializeAdmin() {
     await loadCategories();
-    await loadQuestions();
+
 
     // Event listeners
     const questionForm = document.getElementById('questionForm');
