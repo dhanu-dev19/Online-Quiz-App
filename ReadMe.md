@@ -56,9 +56,9 @@ Admins can add questions and manage quizzes.
 * MySQL
 
 
-## ⚙️ Setup Instructions
+## Setup Instructions
 
-### 🔧 Backend Setup (Flask)
+### Backend Setup (Flask)
 
 ```bash
 cd backend
@@ -66,7 +66,7 @@ pip install -r requirements.txt
 python app.py
 ```
 
-## 🔗 Major API Endpoints
+##  Major API Endpoints
 
 ### Authentication
 
@@ -110,7 +110,7 @@ Admin panel for adding questions
 
 ---
 
-## 📝 Sample Python Quiz Questions
+## Sample Python Quiz Questions
 
 1. What is the output of `print(3 * 'python')`?
 2. Which data type does the `len()` function return?
@@ -125,18 +125,18 @@ Admin panel for adding questions
 
 ---
 
-## 📌 One-line Project Summary (for Resume)
+## One-line Project Summary (for Resume)
 
 **"Built a Flask + MySQL Online Quiz Application with user login, admin question management, auto score calculation, and leaderboard using HTML, CSS, and JavaScript."**
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Feel free to improve the UI or add more categories/questions!
 
 ---
 
-## 📄 License
+## License
 
 
