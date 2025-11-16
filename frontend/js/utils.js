@@ -128,23 +128,3 @@ async function addCategory(categoryData) {
     });
 }
 
-async function fetchAllQuestions() {
-    // This endpoint might need to be created in your backend
-    // For now, we'll fetch all categories and then all questions per category
-    const categories = await fetchCategories();
-    let allQuestions = [];
-
-    for (const category of categories) {
-        try {
-            const questions = await fetchQuestions(category.id);
-            allQuestions = allQuestions.concat(questions.map(q => ({
-                ...q,
-                category_name: category.name
-            })));
-        } catch (error) {
-            console.error(`Error fetching questions for category ${category.id}:`, error);
-        }
-    }
-
-    return allQuestions;
-}

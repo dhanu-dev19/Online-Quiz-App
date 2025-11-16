@@ -48,7 +48,7 @@ async function loadCategories() {
             });
         }
 
-        // Also populate categories list if exists
+          // Display categories in the admin list
         const categoriesList = document.getElementById('categoriesList');
         if (categoriesList) {
             categoriesList.innerHTML = categories.map(category => `
