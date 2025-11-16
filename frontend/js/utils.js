@@ -1,7 +1,8 @@
 // Utility functions
 const API_BASE_URL = 'http://localhost:5000';
 
-function showMessage(message, type = 'error') {
+function showMessage(message, type = 'error')
+{
     const messageEl = document.getElementById('message');
     if (messageEl) {
         messageEl.textContent = message;
@@ -16,25 +17,30 @@ function showMessage(message, type = 'error') {
     }
 }
 
-function getCurrentUser() {
+function getCurrentUser()
+{
     const user = localStorage.getItem('currentUser');
     return user ? JSON.parse(user) : null;
 }
 
-function setCurrentUser(user) {
+function setCurrentUser(user)
+{
     localStorage.setItem('currentUser', JSON.stringify(user));
 }
 
-function getAuthToken() {
+function getAuthToken()
+{
     const user = getCurrentUser();
     return user ? user.token : null;
 }
 
-function logout() {
+function logout()
+{
     localStorage.removeItem('currentUser');
 }
 
-function formatTime(seconds) {
+function formatTime(seconds)
+{
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;

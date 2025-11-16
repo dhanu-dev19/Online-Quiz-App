@@ -7,16 +7,21 @@ import jwt
 import datetime
 from functools import wraps
 import bcrypt
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'Ao07ORB81ELfvmKIfAudSKI-pUBk-yVZZ5vuf7KuBik'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 CORS(app, origins=["http://localhost:3000", "http://localhost:8080"], supports_credentials=True)
 
 # Database configuration
 db_config = {
     'host': 'localhost',
     'user': 'root',
-    'password': 'Dhanushd.@9731',
+    'password': os.getenv('DB_PASS'),
     'database': 'quiz_app',
     'charset': 'utf8mb4',
     'cursorclass': pymysql.cursors.DictCursor
@@ -65,7 +70,7 @@ def admin_required(f):
         return jsonify({'message': 'Database connection failed'}), 500
     return decorated
 
-# Auth Routes
+# Authentication Routes
 @app.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
@@ -101,7 +106,7 @@ def login():
     username = data.get('username')
     password = data.get('password')
 
-    print(f"Login attempt for username: {username}")  # Debug log
+    print(f"Login attempt for username: {username}")  # Debug log Helping trace issues
 
     connection = get_db_connection()
     if connection:
@@ -145,6 +150,8 @@ def login():
     return jsonify({'message': 'Database connection failed'}), 500
 
 # Quiz Routes
+
+# Helps to fetch categories
 @app.route('/categories', methods=['GET'])
 def get_categories():
     connection = get_db_connection()
@@ -157,6 +164,8 @@ def get_categories():
         finally:
             connection.close()
     return jsonify({'message': 'Database connection failed'}), 500
+
+
 
 @app.route('/questions/<int:category_id>', methods=['GET'])
 @token_required
